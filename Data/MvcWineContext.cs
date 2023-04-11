@@ -15,5 +15,11 @@ namespace MvcWine.Data
         }
 
         public DbSet<NyWine.Models.Wine> Wine { get; set; } = default!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Wine>()
+                .HasAlternateKey(w => new { w.ProductGuid });
+        }
     }
 }

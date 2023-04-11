@@ -19,7 +19,7 @@ namespace NyWine.Migrations
                 name: "Wine",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    WineId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ProductGuid = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Name = table.Column<string>(type: "longtext", nullable: false)
@@ -38,7 +38,8 @@ namespace NyWine.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Wine", x => x.Id);
+                    table.PrimaryKey("PK_Wine", x => x.WineId);
+                    table.UniqueConstraint("AK_Wine_ProductGuid", x => x.ProductGuid);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
         }

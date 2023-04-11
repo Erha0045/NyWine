@@ -21,15 +21,12 @@ namespace NyWine.Migrations
 
             modelBuilder.Entity("NyWine.Models.Wine", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("WineId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<float>("AlcoholPercentage")
                         .HasColumnType("float");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -38,9 +35,6 @@ namespace NyWine.Migrations
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -63,7 +57,9 @@ namespace NyWine.Migrations
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("WineId");
+
+                    b.HasAlternateKey("ProductGuid");
 
                     b.ToTable("Wine");
                 });

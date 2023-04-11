@@ -22,21 +22,19 @@ namespace NyWine.Controllers
         // GET: Wines
         public async Task<IActionResult> Index()
         {
-              return _context.Wine != null ? 
-                          View(await _context.Wine.ToListAsync()) :
-                          Problem("Entity set 'MvcWineContext.Wine'  is null.");
+            return View(await _context.Wine.ToListAsync());                        
         }
 
         // GET: Wines/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Wine == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var wine = await _context.Wine
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.ProductGuid == id);
             if (wine == null)
             {
                 return NotFound();
@@ -46,8 +44,12 @@ namespace NyWine.Controllers
         }
 
         // GET: Wines/Create
-        public IActionResult Create()
+         public IActionResult Create(Guid? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Create), new { id = Guid.NewGuid() });
+            }
             return View();
         }
 
@@ -56,11 +58,25 @@ namespace NyWine.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductGuid,Name,Description,Price,Origin,AlcoholPercentage,Year,Image,Size")] Wine wine)
+        public async Task<IActionResult> Create(Guid id, 
+        [Bind("Id,Name,Description,Price,Origin,AlcoholPercentage,Year,Image,Size")] Wine wine)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(wine);
+                wine.ProductGuid = id;
+                var wineId = await _context.Wine
+                    .Where(m => m.ProductGuid == id)
+                    .Select(m => m.WineId)
+                    .SingleOrDefaultAsync();
+                if (wineId == 0)
+                {
+                    _context.Add(wine);
+                }
+                else
+                {
+                    wine.WineId = wineId;
+                    _context.Update(wine);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -68,14 +84,14 @@ namespace NyWine.Controllers
         }
 
         // GET: Wines/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Wine == null)
+            if (id == null )
             {
                 return NotFound();
             }
 
-            var wine = await _context.Wine.FindAsync(id);
+            var wine = await _context.Wine.SingleOrDefaultAsync(m => m.ProductGuid == id);
             if (wine == null)
             {
                 return NotFound();
@@ -88,46 +104,41 @@ namespace NyWine.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductGuid,Name,Description,Price,Origin,AlcoholPercentage,Year,Image,Size")] Wine wine)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Description,Price,Origin,AlcoholPercentage,Year,Image,Size")] Wine wine)
         {
-            if (id != wine.Id)
-            {
-                return NotFound();
-            }
+           wine.ProductGuid = id;
 
             if (ModelState.IsValid)
             {
-                try
+              var wineId = await _context.Wine
+                    .Where(m => m.ProductGuid == id)
+                    .Select(m => m.WineId)
+                    .SingleOrDefaultAsync();
+                if (wineId == 0)
                 {
+                    return NotFound();
+                }
+                else
+                {
+                    wine.WineId = wineId;
                     _context.Update(wine);
-                    await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!WineExists(wine.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(wine);
         }
 
         // GET: Wines/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Wine == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var wine = await _context.Wine
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.ProductGuid == id);
             if (wine == null)
             {
                 return NotFound();
@@ -139,25 +150,19 @@ namespace NyWine.Controllers
         // POST: Wines/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Wine == null)
-            {
-                return Problem("Entity set 'MvcWineContext.Wine'  is null.");
-            }
-            var wine = await _context.Wine.FindAsync(id);
-            if (wine != null)
-            {
-                _context.Wine.Remove(wine);
-            }
-            
+           
+            var wine = await _context.Wine
+                .SingleOrDefaultAsync(m => m.ProductGuid == id);
+            _context.Wine.Remove(wine);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool WineExists(int id)
         {
-          return (_context.Wine?.Any(e => e.Id == id)).GetValueOrDefault();
+            return _context.Wine.Any(e => e.WineId == id);
         }
     }
 }
