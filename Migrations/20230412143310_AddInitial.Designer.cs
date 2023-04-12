@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MvcWine.Data;
 
@@ -10,9 +11,11 @@ using MvcWine.Data;
 namespace NyWine.Migrations
 {
     [DbContext(typeof(MvcWineContext))]
-    partial class MvcWineContextModelSnapshot : ModelSnapshot
+    [Migration("20230412143310_AddInitial")]
+    partial class AddInitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

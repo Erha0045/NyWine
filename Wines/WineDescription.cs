@@ -1,34 +1,34 @@
-
-
 using System.ComponentModel.DataAnnotations;
 
-namespace NyWine.Models
+namespace NyWine.Wines
 {
-    public class Wine
+    public class WineDescription
     {
-        
+        public int WineDescriptionId { get; set; }
+
+        public Wine Wine { get; set; }
         public int WineId { get; set; }
-       [Required]
-        public Guid ProductGuid { get; set; }
-        
+        public DateTime ModifiedDate { get; set; }
+
+        [MaxLength(50)]
+        [Required]
         public string Name { get; set; }
-        
+        [MaxLength(100)]
+        [Required]
         public string Description { get; set; }
-        
+        [Required]
         public decimal Price { get; set; }
-        
+        [Required]
         public string Origin { get; set; }
-        
+        [Required]
         public float AlcoholPercentage { get; set; }
-        
+        [Required]
         public int Year { get; set; }
-        // [Column("image")]
+        [Required]
         public string Image { get; set; }
-        // [Column("bottle_size")]
+        
+        [MaxLength(50)]
+        [Required]
         public string Size { get; set; }
-   
-     
     }
-
 }
-

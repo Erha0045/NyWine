@@ -1,4 +1,4 @@
-@model NyWine.Models.Wine
+@model NyWine.Wines.WineInfo
 
 @{
     ViewData["Title"] = "Delete";
@@ -68,7 +68,7 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="WineId" />
+        <input type="hidden" asp-for="ProductGuid" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

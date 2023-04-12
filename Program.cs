@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MvcWine.Data;
 using DotNetEnv;
+using NyWine.Wines;
 
 Env.Load();
 
@@ -16,6 +17,9 @@ builder.Services.AddDbContext<MvcWineContext>(options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<WineQueries>();
+builder.Services.AddScoped<WineCommands>();
 
 var app = builder.Build();
 
