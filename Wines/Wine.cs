@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NyWine.Wines
 {
+    // Skal fjerne denne
     public class Wine
     {       
         public int WineId { get; set; }
