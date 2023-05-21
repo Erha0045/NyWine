@@ -16,10 +16,13 @@ namespace NyWine.Wines
         {
             var wine = await context.GetOrInsertWine(wineInfo.ProductGuid);
             await SaveWineDescription(wineInfo, wine);
+
+            var message = new { WineId = wine.Id, Action = "Saved" };
+            rabbitMQProducer.PublishMessage(message, "wine.saved");
         }
 
         public async Task SaveWineDescription(WineInfo wineInfo, Wine wine)
-        {            
+        {
             // Get the last description
             var lastWineDescription = context.WineDescription
                 .Where(wineDescription => wineDescription.WineId == wine.WineId)
@@ -53,6 +56,8 @@ namespace NyWine.Wines
                 });
                 await context.SaveChangesAsync();
             }
+            var message = new { WineId = wine.Id, Action = "Saved" };
+            rabbitMQProducer.PublishMessage(message, "wine.saved");
         }
         public async Task DeleteWine(Guid productGuid)
         {
@@ -63,6 +68,9 @@ namespace NyWine.Wines
                 RemovedDate = DateTime.UtcNow
             });
             await context.SaveChangesAsync();
+
+            var message = new { WineId = wine.Id, Action = "Deleted" };
+            rabbitMQProducer.PublishMessage(message, "wine.deleted");
         }
     }
 }
