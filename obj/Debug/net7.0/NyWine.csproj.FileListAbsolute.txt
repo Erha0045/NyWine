@@ -512,3 +512,5 @@
 /Users/nicolaiokkels/Desktop/NyWine/obj/Debug/net7.0/NyWine.csproj.CopyComplete
 /Users/nicolaiokkels/Desktop/NyWine/obj/Debug/net7.0/NyWine.genruntimeconfig.cache
 /Users/nicolaiokkels/Desktop/NyWine/obj/Debug/net7.0/ref/NyWine.dll
+/Users/erhanbasaran/Desktop/NyWine/bin/Debug/net7.0/appsettings.Production.json
+/Users/erhanbasaran/Desktop/NyWine/bin/Debug/net7.0/RabbitMQ.Client.dll

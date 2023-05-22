@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NyWine.Migrations
 {
     /// <inheritdoc />
-    public partial class AddInitial : Migration
+    public partial class initialmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,17 +16,38 @@ namespace NyWine.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CategoryName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Wine",
                 columns: table => new
                 {
                     WineId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ProductGuid = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    ProductGuid = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CategoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Wine", x => x.WineId);
                     table.UniqueConstraint("AK_Wine_ProductGuid", x => x.ProductGuid);
+                    table.ForeignKey(
+                        name: "FK_Wine_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -47,8 +68,8 @@ namespace NyWine.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     AlcoholPercentage = table.Column<float>(type: "float", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
-                    Image = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Image = table.Column<byte[]>(type: "longblob", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     Size = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
@@ -56,6 +77,12 @@ namespace NyWine.Migrations
                 {
                     table.PrimaryKey("PK_WineDescription", x => x.WineDescriptionId);
                     table.UniqueConstraint("AK_WineDescription_WineId_ModifiedDate", x => new { x.WineId, x.ModifiedDate });
+                    table.ForeignKey(
+                        name: "FK_WineDescription_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_WineDescription_Wine_WineId",
                         column: x => x.WineId,
@@ -87,6 +114,16 @@ namespace NyWine.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Wine_CategoryId",
+                table: "Wine",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WineDescription_CategoryId",
+                table: "WineDescription",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WineRemoved_WineId",
                 table: "WineRemoved",
                 column: "WineId");
@@ -103,6 +140,9 @@ namespace NyWine.Migrations
 
             migrationBuilder.DropTable(
                 name: "Wine");
+
+            migrationBuilder.DropTable(
+                name: "Category");
         }
     }
 }

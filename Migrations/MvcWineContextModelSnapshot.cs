@@ -19,10 +19,28 @@ namespace NyWine.Migrations
                 .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("NyWine.Wines.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category");
+                });
+
             modelBuilder.Entity("NyWine.Wines.Wine", b =>
                 {
                     b.Property<int>("WineId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<Guid>("ProductGuid")
@@ -31,6 +49,8 @@ namespace NyWine.Migrations
                     b.HasKey("WineId");
 
                     b.HasAlternateKey("ProductGuid");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Wine");
                 });
@@ -44,14 +64,17 @@ namespace NyWine.Migrations
                     b.Property<float>("AlcoholPercentage")
                         .HasColumnType("float");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<string>("Image")
+                    b.Property<byte[]>("Image")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longblob");
 
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime(6)");
@@ -83,6 +106,8 @@ namespace NyWine.Migrations
 
                     b.HasAlternateKey("WineId", "ModifiedDate");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("WineDescription");
                 });
 
@@ -105,13 +130,28 @@ namespace NyWine.Migrations
                     b.ToTable("WineRemoved");
                 });
 
+            modelBuilder.Entity("NyWine.Wines.Wine", b =>
+                {
+                    b.HasOne("NyWine.Wines.Category", null)
+                        .WithMany("Wines")
+                        .HasForeignKey("CategoryId");
+                });
+
             modelBuilder.Entity("NyWine.Wines.WineDescription", b =>
                 {
+                    b.HasOne("NyWine.Wines.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("NyWine.Wines.Wine", "Wine")
                         .WithMany("Descriptions")
                         .HasForeignKey("WineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("Wine");
                 });
@@ -125,6 +165,11 @@ namespace NyWine.Migrations
                         .IsRequired();
 
                     b.Navigation("Wine");
+                });
+
+            modelBuilder.Entity("NyWine.Wines.Category", b =>
+                {
+                    b.Navigation("Wines");
                 });
 
             modelBuilder.Entity("NyWine.Wines.Wine", b =>

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/nicolaiokkels/Desktop/NyWine/NyWine.csproj": {}
+    "/Users/erhanbasaran/Desktop/NyWine/NyWine.csproj": {}
   },
   "projects": {
-    "/Users/nicolaiokkels/Desktop/NyWine/NyWine.csproj": {
+    "/Users/erhanbasaran/Desktop/NyWine/NyWine.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/nicolaiokkels/Desktop/NyWine/NyWine.csproj",
+        "projectUniqueName": "/Users/erhanbasaran/Desktop/NyWine/NyWine.csproj",
         "projectName": "NyWine",
-        "projectPath": "/Users/nicolaiokkels/Desktop/NyWine/NyWine.csproj",
-        "packagesPath": "/Users/nicolaiokkels/.nuget/packages/",
-        "outputPath": "/Users/nicolaiokkels/Desktop/NyWine/obj/",
+        "projectPath": "/Users/erhanbasaran/Desktop/NyWine/NyWine.csproj",
+        "packagesPath": "/Users/erhanbasaran/.nuget/packages/",
+        "outputPath": "/Users/erhanbasaran/Desktop/NyWine/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/nicolaiokkels/.nuget/NuGet/NuGet.Config"
+          "/Users/erhanbasaran/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -86,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/7.0.100/libexec/sdk/7.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
         }
       }
     }

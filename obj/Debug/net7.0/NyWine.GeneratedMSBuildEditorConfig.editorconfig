@@ -9,57 +9,57 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = NyWine
 build_property.RootNamespace = NyWine
-build_property.ProjectDir = /Users/nicolaiokkels/Desktop/NyWine/
+build_property.ProjectDir = /Users/erhanbasaran/Desktop/NyWine/
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/nicolaiokkels/Desktop/NyWine
+build_property.MSBuildProjectDirectory = /Users/erhanbasaran/Desktop/NyWine
 build_property._RazorSourceGeneratorDebug = 
 
-[/Users/nicolaiokkels/Desktop/NyWine/Views/Home/Index.cshtml]
+[/Users/erhanbasaran/Desktop/NyWine/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/nicolaiokkels/Desktop/NyWine/Views/Home/Privacy.cshtml]
+[/Users/erhanbasaran/Desktop/NyWine/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/nicolaiokkels/Desktop/NyWine/Views/Shared/Error.cshtml]
+[/Users/erhanbasaran/Desktop/NyWine/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/nicolaiokkels/Desktop/NyWine/Views/Shared/_ValidationScriptsPartial.cshtml]
+[/Users/erhanbasaran/Desktop/NyWine/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/nicolaiokkels/Desktop/NyWine/Views/Wines/Create.cshtml]
+[/Users/erhanbasaran/Desktop/NyWine/Views/Wines/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvV2luZXMvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/nicolaiokkels/Desktop/NyWine/Views/Wines/Delete.cshtml]
+[/Users/erhanbasaran/Desktop/NyWine/Views/Wines/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvV2luZXMvRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/nicolaiokkels/Desktop/NyWine/Views/Wines/Details.cshtml]
+[/Users/erhanbasaran/Desktop/NyWine/Views/Wines/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvV2luZXMvRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/nicolaiokkels/Desktop/NyWine/Views/Wines/Edit.cshtml]
+[/Users/erhanbasaran/Desktop/NyWine/Views/Wines/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvV2luZXMvRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/nicolaiokkels/Desktop/NyWine/Views/Wines/Index.cshtml]
+[/Users/erhanbasaran/Desktop/NyWine/Views/Wines/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvV2luZXMvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/nicolaiokkels/Desktop/NyWine/Views/_ViewImports.cshtml]
+[/Users/erhanbasaran/Desktop/NyWine/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/nicolaiokkels/Desktop/NyWine/Views/_ViewStart.cshtml]
+[/Users/erhanbasaran/Desktop/NyWine/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/nicolaiokkels/Desktop/NyWine/Views/Shared/_Layout.cshtml]
+[/Users/erhanbasaran/Desktop/NyWine/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-nz6vxefr5p
