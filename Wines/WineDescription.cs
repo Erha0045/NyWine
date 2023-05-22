@@ -5,7 +5,6 @@ namespace NyWine.Wines
     public class WineDescription
     {
         public int WineDescriptionId { get; set; }
-
         public Wine Wine { get; set; }
         public int WineId { get; set; }
         public DateTime ModifiedDate { get; set; }
@@ -25,7 +24,9 @@ namespace NyWine.Wines
         [Required]
         public int Year { get; set; }
         [Required]
-        public string Image { get; set; }
+        public byte[] Image { get; set; }
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
         
         [MaxLength(50)]
         [Required]

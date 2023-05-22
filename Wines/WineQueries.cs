@@ -59,7 +59,8 @@ namespace NyWine.Wines
                 Year = (int)(wineDescription?.Year),
                 Image = wineDescription?.Image,
                 Size = wineDescription?.Size,
-                LastModifiedTicks = wineDescription?.ModifiedDate.Ticks ?? 0
+                LastModifiedTicks = wineDescription?.ModifiedDate.Ticks ?? 0,
+                CategoryId = (int)wineDescription?.CategoryId
             };
         }
     }

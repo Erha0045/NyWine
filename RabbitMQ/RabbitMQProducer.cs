@@ -2,7 +2,7 @@ using RabbitMQ.Client;
 using System.Text.Json;
 using System.Text;
 
-namespace product_service.RabbitMQ
+namespace NyWine.RabbitMQ
 {
     public class RabbitMQProducer
     {

@@ -5,31 +5,34 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NyWine.RabbitMQ;
 
 
 namespace NyWine.Wines
 {
     public class WinesController : Controller
     {
-        private readonly WineQueries queries;
-        private readonly WineCommands commands;
+        private readonly WineQueries _queries;
+        private readonly WineCommands _commands;
+        private readonly RabbitMQProducer _rabbitMQProducer;
 
-        public WinesController(WineQueries queries, WineCommands commands)
+        public WinesController(WineQueries queries, WineCommands commands, RabbitMQProducer rabbitMQProducer)
         {
-            this.queries = queries;
-            this.commands = commands;
+            _queries = queries;
+            _commands = commands;
+            _rabbitMQProducer = rabbitMQProducer;
         }
 
         // GET: Wines
         public async Task<IActionResult> Index()
         {
-            return View(await queries.ListWines());
+            return View(await _queries.ListWines());
         }
 
         // GET: Wines/Details/5-sas
         public async Task<IActionResult> Details(Guid id)
         {           
-            var wine = await queries.GetWine(id);
+            var wine = await _queries.GetWine(id);
             if (wine == null)
             {
                 return NotFound();
@@ -45,6 +48,9 @@ namespace NyWine.Wines
             {
                 return RedirectToAction(nameof(Create), new { id = Guid.NewGuid() });
             }
+
+            var message = new { WineId = id, Action = "Saved" };
+            _rabbitMQProducer.PublishMessage(message, "wine.saved");
             
             return View();
         }
@@ -60,7 +66,7 @@ namespace NyWine.Wines
             if (ModelState.IsValid)
             {
                 wine.ProductGuid = id;
-                await commands.SaveWine(wine);
+                await _commands.SaveWine(wine);
                 return RedirectToAction(nameof(Index));
             }
             return View(wine);
@@ -69,7 +75,7 @@ namespace NyWine.Wines
         // GET: Wines/Edit/5
         public async Task<IActionResult> Edit(Guid id)
         {
-            var wine = await queries.GetWine(id);
+            var wine = await _queries.GetWine(id);
             if (wine == null)
             {
                 return NotFound();
@@ -88,7 +94,7 @@ namespace NyWine.Wines
             if (ModelState.IsValid)
             {
                 wine.ProductGuid = id;
-                await commands.SaveWine(wine);
+                await _commands.SaveWine(wine);
                 return RedirectToAction(nameof(Index));
             }
             return View(wine);
@@ -97,7 +103,7 @@ namespace NyWine.Wines
         // GET: Wines/Delete/5
         public async Task<IActionResult> Delete(Guid id)
         {
-            var wine = await queries.GetWine(id);
+            var wine = await _queries.GetWine(id);
             if (wine == null)
             {
                 return NotFound();
@@ -110,7 +116,7 @@ namespace NyWine.Wines
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            await commands.DeleteWine(id);
+            await _commands.DeleteWine(id);
             return RedirectToAction(nameof(Index));
         }
     }

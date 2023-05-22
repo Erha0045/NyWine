@@ -15,6 +15,7 @@ namespace MvcWine.Data
         }
 
         public DbSet<Wine> Wine { get; set; }
+        public DbSet<Category> Category { get; set; }
         public DbSet<WineDescription> WineDescription { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

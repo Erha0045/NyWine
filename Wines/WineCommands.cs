@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MvcWine.Data;
+using NyWine.RabbitMQ;
 
 namespace NyWine.Wines
 {
@@ -16,9 +17,6 @@ namespace NyWine.Wines
         {
             var wine = await context.GetOrInsertWine(wineInfo.ProductGuid);
             await SaveWineDescription(wineInfo, wine);
-
-            var message = new { WineId = wine.Id, Action = "Saved" };
-            rabbitMQProducer.PublishMessage(message, "wine.saved");
         }
 
         public async Task SaveWineDescription(WineInfo wineInfo, Wine wine)
@@ -52,12 +50,11 @@ namespace NyWine.Wines
                     AlcoholPercentage = wineInfo.AlcoholPercentage,
                     Year = wineInfo.Year,
                     Image = wineInfo.Image,
-                    Size = wineInfo.Size
+                    Size = wineInfo.Size,
+                    CategoryId = wineInfo.CategoryId
                 });
                 await context.SaveChangesAsync();
             }
-            var message = new { WineId = wine.Id, Action = "Saved" };
-            rabbitMQProducer.PublishMessage(message, "wine.saved");
         }
         public async Task DeleteWine(Guid productGuid)
         {
@@ -68,9 +65,6 @@ namespace NyWine.Wines
                 RemovedDate = DateTime.UtcNow
             });
             await context.SaveChangesAsync();
-
-            var message = new { WineId = wine.Id, Action = "Deleted" };
-            rabbitMQProducer.PublishMessage(message, "wine.deleted");
         }
     }
 }
