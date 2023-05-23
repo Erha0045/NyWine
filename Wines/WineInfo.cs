@@ -15,13 +15,13 @@ namespace NyWine.Wines
     
         public int Year { get; set; }
        
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         
         public string Size { get; set; }
         public long LastModifiedTicks { get; set; }
 
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        // public int CategoryId { get; set; }
+        // public Category Category { get; set; }
 
         public static WineInfo FromEntities(Guid productGuid, WineDescription description)
         {
@@ -37,7 +37,7 @@ namespace NyWine.Wines
                 Image = description?.Image,
                 Size = description?.Size,
                 LastModifiedTicks = description?.ModifiedDate.Ticks ?? 0,
-                CategoryId = (int)description?.CategoryId
+                //CategoryId = (int)description?.CategoryId
             };
             
         }

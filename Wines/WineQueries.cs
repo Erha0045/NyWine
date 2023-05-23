@@ -60,7 +60,7 @@ namespace NyWine.Wines
                 Image = wineDescription?.Image,
                 Size = wineDescription?.Size,
                 LastModifiedTicks = wineDescription?.ModifiedDate.Ticks ?? 0,
-                CategoryId = (int)wineDescription?.CategoryId
+                //CategoryId = (int)wineDescription?.CategoryId
             };
         }
     }

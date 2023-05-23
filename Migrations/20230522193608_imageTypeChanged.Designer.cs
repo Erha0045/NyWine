@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MvcWine.Data;
 
@@ -10,9 +11,11 @@ using MvcWine.Data;
 namespace NyWine.Migrations
 {
     [DbContext(typeof(MvcWineContext))]
-    partial class MvcWineContextModelSnapshot : ModelSnapshot
+    [Migration("20230522193608_imageTypeChanged")]
+    partial class imageTypeChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,6 +67,9 @@ namespace NyWine.Migrations
                     b.Property<float>("AlcoholPercentage")
                         .HasColumnType("float");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -103,6 +109,8 @@ namespace NyWine.Migrations
 
                     b.HasAlternateKey("WineId", "ModifiedDate");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("WineDescription");
                 });
 
@@ -134,11 +142,19 @@ namespace NyWine.Migrations
 
             modelBuilder.Entity("NyWine.Wines.WineDescription", b =>
                 {
+                    b.HasOne("NyWine.Wines.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("NyWine.Wines.Wine", "Wine")
                         .WithMany("Descriptions")
                         .HasForeignKey("WineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("Wine");
                 });

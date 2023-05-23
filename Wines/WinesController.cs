@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NyWine.RabbitMQ;
+
 
 
 namespace NyWine.Wines
@@ -14,13 +16,20 @@ namespace NyWine.Wines
     {
         private readonly WineQueries _queries;
         private readonly WineCommands _commands;
-        private readonly RabbitMQProducer _rabbitMQProducer;
+        private readonly IMessageProducer _messageProducer;
+    /*     private readonly RabbitMQProducer _rabbitMQProducer;
 
         public WinesController(WineQueries queries, WineCommands commands, RabbitMQProducer rabbitMQProducer)
         {
             _queries = queries;
             _commands = commands;
             _rabbitMQProducer = rabbitMQProducer;
+        } */
+        public WinesController(WineQueries queries, WineCommands commands, IMessageProducer messageProducer)
+        {
+            _queries = queries;
+            _commands = commands;
+            _messageProducer = messageProducer;
         }
 
         // GET: Wines
@@ -49,8 +58,8 @@ namespace NyWine.Wines
                 return RedirectToAction(nameof(Create), new { id = Guid.NewGuid() });
             }
 
-            var message = new { WineId = id, Action = "Saved" };
-            _rabbitMQProducer.PublishMessage(message, "wine.saved");
+            //var message = new { WineId = id, Action = "Saved" };
+            // _rabbitMQProducer.PublishMessage(message, "wine.saved");
             
             return View();
         }
@@ -61,14 +70,19 @@ namespace NyWine.Wines
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Guid id,
-        [Bind("Id,Name,Description,Price,Origin,AlcoholPercentage,Year,Image,Size")] WineInfo wine)
+       //[Bind("Id,Name,Description,Price,Origin,AlcoholPercentage,Year,Image,Size,CategoryId")] WineInfo wine)
+               [Bind("Id,Name,Description,Price,Origin,AlcoholPercentage,Year,Image,Size")] WineInfo wine)
+
         {
             if (ModelState.IsValid)
             {
                 wine.ProductGuid = id;
                 await _commands.SaveWine(wine);
+                var message = new { WineId = id, Action = "Saved" };
+                _messageProducer.PublishMessage<WineInfo>(wine);
                 return RedirectToAction(nameof(Index));
             }
+            
             return View(wine);
         }
 
@@ -90,6 +104,7 @@ namespace NyWine.Wines
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
         [Bind("Id,Name,Description,Price,Origin,AlcoholPercentage,Year,Image,Size")] WineInfo wine)
+   
         {
             if (ModelState.IsValid)
             {

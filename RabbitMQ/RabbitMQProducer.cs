@@ -4,7 +4,32 @@ using System.Text;
 
 namespace NyWine.RabbitMQ
 {
-    public class RabbitMQProducer
+    public class RabbitMQProducer : IMessageProducer
+    {
+        public void PublishMessage<T>(T message)
+        {
+            var factory = new ConnectionFactory()
+            {
+                HostName = "localhost",
+                UserName = "guest",
+                Password = "guest",
+                VirtualHost = "/"
+            };
+
+            var conn = factory.CreateConnection();
+
+            using var channel = conn.CreateModel();
+
+            channel.QueueDeclare("wines", durable: true, exclusive: false);
+
+            var jsonString = JsonSerializer.Serialize(message);
+            var body = Encoding.UTF8.GetBytes(jsonString);
+
+            channel.BasicPublish("", "wines", body: body);
+        }
+    }
+
+    /* public class RabbitMQProducer
     {
         private readonly RabbitMQConfiguration _rabbitMQConfig;
 
@@ -41,5 +66,6 @@ namespace NyWine.RabbitMQ
                 }
             }
         }
-    }
+    } */
+
 }

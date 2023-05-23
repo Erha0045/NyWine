@@ -17,14 +17,16 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<MvcWineContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-var rabbitMQConfig = new RabbitMQConfiguration();
+/* var rabbitMQConfig = new RabbitMQConfiguration();
 builder.Configuration.GetSection("RabbitMQ").Bind(rabbitMQConfig);
-builder.Services.AddSingleton(rabbitMQConfig);
+builder.Services.AddSingleton(rabbitMQConfig); */
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<RabbitMQProducer>();
+//builder.Services.AddSingleton<RabbitMQProducer>();
+
+builder.Services.AddScoped<IMessageProducer, RabbitMQProducer>();
 
 builder.Services.AddScoped<WineQueries>();
 builder.Services.AddScoped<WineCommands>();

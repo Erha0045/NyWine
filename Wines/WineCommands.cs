@@ -51,7 +51,7 @@ namespace NyWine.Wines
                     Year = wineInfo.Year,
                     Image = wineInfo.Image,
                     Size = wineInfo.Size,
-                    CategoryId = wineInfo.CategoryId
+                    //CategoryId = wineInfo.CategoryId
                 });
                 await context.SaveChangesAsync();
             }

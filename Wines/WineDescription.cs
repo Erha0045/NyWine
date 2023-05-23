@@ -24,9 +24,10 @@ namespace NyWine.Wines
         [Required]
         public int Year { get; set; }
         [Required]
-        public byte[] Image { get; set; }
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public string Image { get; set; }
+        //[Required]
+        // public int CategoryId { get; set; }
+        // public Category Category { get; set; }
         
         [MaxLength(50)]
         [Required]
