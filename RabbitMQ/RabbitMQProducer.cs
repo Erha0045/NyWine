@@ -29,7 +29,7 @@ namespace NyWine.RabbitMQ
 
             using var channel = conn.CreateModel();
 
-            channel.QueueDeclare("wineQueue", durable: true, exclusive: false);
+            channel.QueueDeclare("wineQueue", durable: false, exclusive: false, autoDelete: true);
 
             var jsonString = JsonSerializer.Serialize(message);
             var body = Encoding.UTF8.GetBytes(jsonString);
