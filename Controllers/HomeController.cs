@@ -12,12 +12,12 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
-    [Route("api/administration/")]
+    [Route("api/admin")]
     public IActionResult Index()
     {
         return View();
     }
-    [Route("api/administration/privacy")]
+    [Route("api/admin/privacy")]
     public IActionResult Privacy()
     {
         return View();

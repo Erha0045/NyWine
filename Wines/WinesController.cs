@@ -17,14 +17,14 @@ namespace NyWine.Wines
         private readonly WineQueries _queries;
         private readonly WineCommands _commands;
         private readonly IMessageProducer _messageProducer;
-    /*     private readonly RabbitMQProducer _rabbitMQProducer;
+        /*     private readonly RabbitMQProducer _rabbitMQProducer;
 
-        public WinesController(WineQueries queries, WineCommands commands, RabbitMQProducer rabbitMQProducer)
-        {
-            _queries = queries;
-            _commands = commands;
-            _rabbitMQProducer = rabbitMQProducer;
-        } */
+            public WinesController(WineQueries queries, WineCommands commands, RabbitMQProducer rabbitMQProducer)
+            {
+                _queries = queries;
+                _commands = commands;
+                _rabbitMQProducer = rabbitMQProducer;
+            } */
         public WinesController(WineQueries queries, WineCommands commands, IMessageProducer messageProducer)
         {
             _queries = queries;
@@ -42,7 +42,7 @@ namespace NyWine.Wines
         // GET: Wines/Details/5-sas
         [Route("api/admin/wines/details/{id}")]
         public async Task<IActionResult> Details(Guid id)
-        {           
+        {
             var wine = await _queries.GetWine(id);
             if (wine == null)
             {
@@ -63,18 +63,18 @@ namespace NyWine.Wines
 
             //var message = new { WineId = id, Action = "Saved" };
             // _rabbitMQProducer.PublishMessage(message, "wine.saved");
-            
+
             return View();
         }
 
         // POST: Wines/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Route("api/administration/wines/create")]
+        [Route("api/admin/wines/create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Guid id,
-       //[Bind("Id,Name,Description,Price,Origin,AlcoholPercentage,Year,Image,Size,CategoryId")] WineInfo wine)
+               //[Bind("Id,Name,Description,Price,Origin,AlcoholPercentage,Year,Image,Size,CategoryId")] WineInfo wine)
                [Bind("Id,Name,Description,Price,Origin,AlcoholPercentage,Year,Image,Size")] WineInfo wine)
 
         {
@@ -86,11 +86,12 @@ namespace NyWine.Wines
                 _messageProducer.PublishMessage<WineInfo>(wine);
                 return RedirectToAction(nameof(Index));
             }
-            
+
             return View(wine);
         }
 
         // GET: Wines/Edit/5
+        [Route("api/admin/wines/edit/{id}")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var wine = await _queries.GetWine(id);
@@ -104,11 +105,12 @@ namespace NyWine.Wines
         // POST: Wines/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("api/admin/wines/edit/{id}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id,
         [Bind("Id,Name,Description,Price,Origin,AlcoholPercentage,Year,Image,Size")] WineInfo wine)
-   
+
         {
             if (ModelState.IsValid)
             {
