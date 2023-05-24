@@ -33,14 +33,14 @@ namespace NyWine.Wines
         }
 
         // GET: Wines
-        [Route("api/administration/wines")]
+        [Route("api/admin/wines")]
         public async Task<IActionResult> Index()
         {
             return View(await _queries.ListWines());
         }
 
         // GET: Wines/Details/5-sas
-        [Route("api/administration/wines/details/{id}")]
+        [Route("api/admin/wines/details/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {           
             var wine = await _queries.GetWine(id);
@@ -53,7 +53,7 @@ namespace NyWine.Wines
         }
 
         // GET: Wines/Create
-        [Route("api/administration/wines/create")]
+        [Route("api/admin/wines/create")]
         public IActionResult Create(Guid? id)
         {
             if (id == null)

@@ -8,6 +8,15 @@ using NyWine.RabbitMQ;
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
+// CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("*").AllowAnyHeader().WithMethods("GET", "POST");
+        });
+});
 
 // Configure the database connection for MySQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?
