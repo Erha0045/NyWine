@@ -33,12 +33,14 @@ namespace NyWine.Wines
         }
 
         // GET: Wines
+        [Route("api/administration/wines")]
         public async Task<IActionResult> Index()
         {
             return View(await _queries.ListWines());
         }
 
         // GET: Wines/Details/5-sas
+        [Route("api/administration/wines/details/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {           
             var wine = await _queries.GetWine(id);
@@ -51,6 +53,7 @@ namespace NyWine.Wines
         }
 
         // GET: Wines/Create
+        [Route("api/administration/wines/create")]
         public IActionResult Create(Guid? id)
         {
             if (id == null)
@@ -67,6 +70,7 @@ namespace NyWine.Wines
         // POST: Wines/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("api/administration/wines/create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Guid id,
